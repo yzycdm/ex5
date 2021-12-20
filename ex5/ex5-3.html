@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>5.3 animation动画</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      html,body{
+      	background-color:#000000;
+	    	width:100%;
+      	height:100%;
+      	overflow:hidden;
+      }
+      /* 表盘 */
+      .clock{
+      	position:relative;      	
+	      width:300px;
+      	height:300px;  
+      	margin:50px auto;    	
+      	background-image:url("res/clock.png");
+      	background-repeat:no-repeat;
+      	background-size:cover;
+      }
+      /* 表针 */
+      .clock div{
+	    position:absolute;
+      	left:50%;
+      	top:50%;
+      	transform-origin:bottom;
+      	transform:translate(-50%,-100%) rotatez(0deg);
+      	
+      	width:5px;
+      	border-radius:30px;
+      }
+      /* 时针动画 */
+      #hour{
+      	height:50px;
+      	background-color:#000000;
+      	
+      	animation:clock 120s linear infinite;/* 指定时针animation动画 */
+      }
+      /* 分针动画 */
+      #minute{
+      	height:70px;
+      	background-color:#000000;
+      	
+      	animation:clock 60s linear infinite;/* 指针分针animation动画 */
+      }
+      /* 秒针动画 */
+      #second{
+      	height:90px;
+      	background-color:#ff0000;
+      	
+      	animation:clock 2s linear infinite;/* 指定秒针animation动画 */
+      }
+      /* 星动画 */
+      @keyframes star{
+	    0%{opacity:0}
+      	50%{opacity:1}
+      	100%{opacity:0}
+      }
+      /* 钟表指针动画 */
+      @keyframes clock{
+	    100%{transform:translate(-50%,-100%) rotatez(360deg);}
+      }
+      p{
+      	position:fixed;
+      	top:400px;
+      	width:100%;
+      	text-align: center;
+      }
+      p a{
+      	color:#FFF;
+      	text-decoration: none;
+      }
+    </style>
+    <script type="text/javascript">
+      window.onload = function(){
+    	  //调用星动画
+    	  createStar()
+      }
+      //创建星
+      function createStar(){
+    	  var offsetWidth = document.body.offsetWidth;
+    	  var offsetHeight = document.body.offsetHeight;
+    	  
+    	  //创建星，并设置相应样式
+    	  var star = document.createElement("img");
+    	  star.src = "res/star.png";
+    	  star.style.position = "absolute";
+    	  star.style.left = (Math.random()*offsetWidth)+"px";
+    	  star.style.top = (Math.random()*offsetHeight)+"px";
+    	  star.style.opacity = 0;
+    	  star.style.animation = "star 1s ease";//给星添加animation动画
+    	  
+    	  //动画完成，将星从body中删除
+    	  star.addEventListener("animationend",function(){
+    		  document.body.removeChild(this);
+    	  });
+    	  
+    	  //将星添加给body
+    	  document.body.appendChild(star);
+    	  
+    	  window.setTimeout("createStar()",100);
+      }
+    </script>
+  </head>
+  <body>
+    
+    <div class="clock">
+      <div id="hour"></div>
+      <div id="minute"></div>
+      <div id="second"></div>
+    </div>
+    <p><a href="index.html">返回首页</a></p>
+  </body>
+</html>
+
